@@ -24,3 +24,36 @@ private:
         }
     }
 };
+
+
+/* DP Solution  */
+
+class Solution {
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph){
+        return  f1(graph,0);
+
+    }
+    vector<vector<int>> f1(vector<vector<int>> graph,int vertex){
+        if(vertex == graph.size()-1){
+            return {{vertex}};
+        }
+        else{
+            vector<vector<int>> allpaths;
+
+            for(int neighbor:graph[vertex]){
+                vector<vector<int>>paths=f1(graph,neighbor);
+
+                for(vector<int>& path:paths){
+                    path.insert(path.begin(),vertex);
+                    allpaths.push_back(path);
+                }
+            }
+     return allpaths;
+           
+        }
+     
+    }
+    };
+
+
