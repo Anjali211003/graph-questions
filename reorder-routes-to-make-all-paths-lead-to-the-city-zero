@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void dfs(int node,vector<vector<int>>&forward_nbrs,vector<vector<int>>&backward_nbrs,int& ans,vector<int>& visited ){
+        visited[node]=1;
+        for(int nbr:forward_nbrs[node]){
+          if(!visited[nbr]){
+            ans+=1;
+            dfs(nbr,forward_nbrs,backward_nbrs,ans,visited);
+          }
+
+        }
+        for(int nbr:backward_nbrs[node]){
+            if(!visited[nbr]){
+                dfs(nbr,forward_nbrs,backward_nbrs,ans,visited);
+            }
+        }
+    }
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<int>>forward_nbrs(n),backward_nbrs(n);
+        vector<int>visited(n);
+        for(int i=0;i<connections.size();i++){
+            int a=connections[i][0];
+            int b=connections[i][1];
+            forward_nbrs[a].push_back(b);
+            backward_nbrs[b].push_back(a);
+        }
+        int ans=0;
+        dfs(0,forward_nbrs,backward_nbrs,ans,visited);
+        return ans;
+    }
+};
